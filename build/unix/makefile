@@ -98,6 +98,7 @@ SOURCE_DIRS_MANGO  = mango/core \
                      external/zstd/common \
                      external/zstd/compress \
                      external/zstd/decompress \
+                     external/astc \
                      external/zpng \
                      external/lzfse \
                      external/bc \
