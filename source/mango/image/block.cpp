@@ -5,40 +5,75 @@
 #include <map>
 #include <mango/core/core.hpp>
 #include <mango/image/image.hpp>
-#include "../../external/google/etc.hpp"
-#include "../../external/google/astc.hpp"
-#include "../../external/bc/BC.h"
 
 #define MAKE_FORMAT(bits, type, order, s0, s1, s2, s3) \
     Format(bits, Format::type, Format::order, s0, s1, s2, s3)
 
-#define FORMAT_ASTC MAKE_FORMAT(32, UNORM, RGBA, 8, 8, 8, 8)
+#define FORMAT_ASTC_SRGB MAKE_FORMAT(32, UNORM, RGBA, 8, 8, 8, 8)
+#define FORMAT_ASTC_FP16 MAKE_FORMAT(64, FLOAT16, RGBA, 16, 16, 16, 16)
 
 namespace mango
 {
 
-    // decoders
-    void decode_block_dxt1           (const TextureCompressionInfo& info, u8* output, const u8* input, int stride); // BC1
-    void decode_block_dxt3           (const TextureCompressionInfo& info, u8* output, const u8* input, int stride); // BC2
-    void decode_block_dxt5           (const TextureCompressionInfo& info, u8* output, const u8* input, int stride); // BC3
-    void decode_block_3dc_x          (const TextureCompressionInfo& info, u8* output, const u8* input, int stride); // BC4U
-    void decode_block_3dc_xy         (const TextureCompressionInfo& info, u8* output, const u8* input, int stride); // BC5U
-    void decode_block_uyvy           (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
-    void decode_block_yuy2           (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
-    void decode_block_grgb8          (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
-    void decode_block_rgbg8          (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
-    void decode_block_rgb9e5         (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
-    void decode_block_r11f_g11f_b10f (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
-    void decode_block_r10f_g11f_b11f (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
-    void decode_block_pvrtc          (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
-    void decode_block_atc            (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
-    void decode_block_atc_e          (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
-    void decode_block_atc_i          (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
-    void decode_block_fxt1_rgb       (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
-    void decode_block_fxt1_rgba      (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
+    void decode_block_dxt1            (const TextureCompressionInfo& info, u8* output, const u8* input, int stride); // BC1
+    void decode_block_dxt3            (const TextureCompressionInfo& info, u8* output, const u8* input, int stride); // BC2
+    void decode_block_dxt5            (const TextureCompressionInfo& info, u8* output, const u8* input, int stride); // BC3
+    void decode_block_3dc_x           (const TextureCompressionInfo& info, u8* output, const u8* input, int stride); // BC4U
+    void decode_block_3dc_xy          (const TextureCompressionInfo& info, u8* output, const u8* input, int stride); // BC5U
+    void decode_block_uyvy            (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
+    void decode_block_yuy2            (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
+    void decode_block_grgb8           (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
+    void decode_block_rgbg8           (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
+    void decode_block_rgb9e5          (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
+    void decode_block_r11f_g11f_b10f  (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
+    void decode_block_r10f_g11f_b11f  (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
+    void decode_block_pvrtc           (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
+    void decode_block_atc             (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
+    void decode_block_atc_e           (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
+    void decode_block_atc_i           (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
+    void decode_block_fxt1_rgb        (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
+    void decode_block_fxt1_rgba       (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
 
-    // encoders
-    void encode_block_etc1           (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
+#ifdef MANGO_ENABLE_LICENSE_APACHE
+
+    void decode_block_etc1            (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
+    void decode_block_etc2            (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
+    void decode_block_etc2_eac        (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
+    void decode_block_eac_r11         (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
+    void decode_block_eac_rg11        (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
+    void decode_block_astc_fp16       (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
+    void decode_block_astc_srgb       (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
+
+#endif // MANGO_ENABLE_LICENSE_APACHE
+
+#ifdef MANGO_ENABLE_LICENSE_MICROSOFT
+
+    void decode_block_bc1             (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
+    void decode_block_bc2             (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
+    void decode_block_bc3             (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
+    void decode_block_bc4u            (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
+    void decode_block_bc4s            (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
+    void decode_block_bc5u            (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
+    void decode_block_bc5s            (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
+    void decode_block_bc6hu           (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
+    void decode_block_bc6hs           (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
+    void decode_block_bc7             (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
+
+    void encode_block_bc1             (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
+    void encode_block_bc1a            (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
+    void encode_block_bc2             (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
+    void encode_block_bc3             (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
+    void encode_block_bc4u            (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
+    void encode_block_bc4s            (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
+    void encode_block_bc5u            (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
+    void encode_block_bc5s            (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
+    void encode_block_bc6hu           (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
+    void encode_block_bc6hs           (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
+    void encode_block_bc7             (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
+
+#endif // MANGO_ENABLE_LICENSE_MICROSOFT
+
+    void encode_block_etc1            (const TextureCompressionInfo& info, u8* output, const u8* input, int stride);
 
 } // namespace mango
 
@@ -475,7 +510,7 @@ namespace
             dxgi::FORMAT_ASTC_4X4_UNORM,
             opengl::COMPRESSED_RGBA_ASTC_4x4_KHR,
             vulkan::FORMAT_ASTC_4x4_UNORM_BLOCK,
-            4,  4, 16, FORMAT_ASTC, decode_block_astc, nullptr
+            4,  4, 16, FORMAT_ASTC_FP16, decode_block_astc_fp16, nullptr
         ),
 
         TextureCompressionInfo(
@@ -483,7 +518,7 @@ namespace
             dxgi::FORMAT_ASTC_5X4_UNORM,
             opengl::COMPRESSED_RGBA_ASTC_5x4_KHR,
             vulkan::FORMAT_ASTC_5x4_UNORM_BLOCK,
-            5,  4, 16, FORMAT_ASTC, decode_block_astc, nullptr
+            5,  4, 16, FORMAT_ASTC_FP16, decode_block_astc_fp16, nullptr
         ),
 
         TextureCompressionInfo(
@@ -491,7 +526,7 @@ namespace
             dxgi::FORMAT_ASTC_5X5_UNORM,
             opengl::COMPRESSED_RGBA_ASTC_5x5_KHR,
             vulkan::FORMAT_ASTC_5x5_UNORM_BLOCK,
-            5,  5, 16, FORMAT_ASTC, decode_block_astc, nullptr
+            5,  5, 16, FORMAT_ASTC_FP16, decode_block_astc_fp16, nullptr
         ),
 
         TextureCompressionInfo(
@@ -499,7 +534,7 @@ namespace
             dxgi::FORMAT_ASTC_6X5_UNORM,
             opengl::COMPRESSED_RGBA_ASTC_6x5_KHR,
             vulkan::FORMAT_ASTC_6x5_UNORM_BLOCK,
-            6,  5, 16, FORMAT_ASTC, decode_block_astc, nullptr
+            6,  5, 16, FORMAT_ASTC_FP16, decode_block_astc_fp16, nullptr
         ),
 
         TextureCompressionInfo(
@@ -507,7 +542,7 @@ namespace
             dxgi::FORMAT_ASTC_6X6_UNORM,
             opengl::COMPRESSED_RGBA_ASTC_6x6_KHR,
             vulkan::FORMAT_ASTC_6x6_UNORM_BLOCK,
-            6,  6, 16, FORMAT_ASTC, decode_block_astc, nullptr
+            6,  6, 16, FORMAT_ASTC_FP16, decode_block_astc_fp16, nullptr
         ),
 
         TextureCompressionInfo(
@@ -515,7 +550,7 @@ namespace
             dxgi::FORMAT_ASTC_8X5_UNORM,
             opengl::COMPRESSED_RGBA_ASTC_8x5_KHR,
             vulkan::FORMAT_ASTC_8x5_UNORM_BLOCK,
-            8,  5, 16, FORMAT_ASTC, decode_block_astc, nullptr
+            8,  5, 16, FORMAT_ASTC_FP16, decode_block_astc_fp16, nullptr
         ),
 
         TextureCompressionInfo(
@@ -523,7 +558,7 @@ namespace
             dxgi::FORMAT_ASTC_8X6_UNORM,
             opengl::COMPRESSED_RGBA_ASTC_8x6_KHR,
             vulkan::FORMAT_ASTC_8x6_UNORM_BLOCK,
-            8,  6, 16, FORMAT_ASTC, decode_block_astc, nullptr
+            8,  6, 16, FORMAT_ASTC_FP16, decode_block_astc_fp16, nullptr
         ),
 
         TextureCompressionInfo(
@@ -531,7 +566,7 @@ namespace
             dxgi::FORMAT_ASTC_8X8_UNORM,
             opengl::COMPRESSED_RGBA_ASTC_8x8_KHR,
             vulkan::FORMAT_ASTC_8x8_UNORM_BLOCK,
-            8,  8, 16, FORMAT_ASTC, decode_block_astc, nullptr
+            8,  8, 16, FORMAT_ASTC_FP16, decode_block_astc_fp16, nullptr
         ),
 
         TextureCompressionInfo(
@@ -539,7 +574,7 @@ namespace
             dxgi::FORMAT_ASTC_10X5_UNORM,
             opengl::COMPRESSED_RGBA_ASTC_10x5_KHR,
             vulkan::FORMAT_ASTC_10x5_UNORM_BLOCK,
-            10,  5, 16, FORMAT_ASTC, decode_block_astc, nullptr
+            10,  5, 16, FORMAT_ASTC_FP16, decode_block_astc_fp16, nullptr
         ),
 
         TextureCompressionInfo(
@@ -547,7 +582,7 @@ namespace
             dxgi::FORMAT_ASTC_10X6_UNORM,
             opengl::COMPRESSED_RGBA_ASTC_10x6_KHR,
             vulkan::FORMAT_ASTC_10x6_UNORM_BLOCK,
-            10,  6, 16, FORMAT_ASTC, decode_block_astc, nullptr
+            10,  6, 16, FORMAT_ASTC_FP16, decode_block_astc_fp16, nullptr
         ),
 
         TextureCompressionInfo(
@@ -555,7 +590,7 @@ namespace
             dxgi::FORMAT_ASTC_10X8_UNORM,
             opengl::COMPRESSED_RGBA_ASTC_10x8_KHR,
             vulkan::FORMAT_ASTC_10x8_UNORM_BLOCK,
-            10,  8, 16, FORMAT_ASTC, decode_block_astc, nullptr
+            10,  8, 16, FORMAT_ASTC_FP16, decode_block_astc_fp16, nullptr
         ),
 
         TextureCompressionInfo(
@@ -563,7 +598,7 @@ namespace
             dxgi::FORMAT_ASTC_10X10_UNORM,
             opengl::COMPRESSED_RGBA_ASTC_10x10_KHR,
             vulkan::FORMAT_ASTC_10x10_UNORM_BLOCK,
-            10, 10, 16, FORMAT_ASTC, decode_block_astc, nullptr
+            10, 10, 16, FORMAT_ASTC_FP16, decode_block_astc_fp16, nullptr
         ),
 
         TextureCompressionInfo(
@@ -571,7 +606,7 @@ namespace
             dxgi::FORMAT_ASTC_12X10_UNORM,
             opengl::COMPRESSED_RGBA_ASTC_12x10_KHR,
             vulkan::FORMAT_ASTC_12x10_UNORM_BLOCK,
-            12, 10, 16, FORMAT_ASTC, decode_block_astc, nullptr
+            12, 10, 16, FORMAT_ASTC_FP16, decode_block_astc_fp16, nullptr
         ),
 
         TextureCompressionInfo(
@@ -579,7 +614,7 @@ namespace
             dxgi::FORMAT_ASTC_12X12_UNORM,
             opengl::COMPRESSED_RGBA_ASTC_12x12_KHR,
             vulkan::FORMAT_ASTC_12x12_UNORM_BLOCK,
-            12, 12, 16, FORMAT_ASTC, decode_block_astc, nullptr
+            12, 12, 16, FORMAT_ASTC_FP16, decode_block_astc_fp16, nullptr
         ),
 
         TextureCompressionInfo(
@@ -587,7 +622,7 @@ namespace
             dxgi::FORMAT_ASTC_4X4_UNORM_SRGB,
             opengl::COMPRESSED_SRGB8_ALPHA8_ASTC_4x4_KHR,
             vulkan::FORMAT_ASTC_4x4_SRGB_BLOCK,
-            4,  4, 16, FORMAT_ASTC, decode_block_astc, nullptr
+            4,  4, 16, FORMAT_ASTC_SRGB, decode_block_astc_srgb, nullptr
         ),
 
         TextureCompressionInfo(
@@ -595,7 +630,7 @@ namespace
             dxgi::FORMAT_ASTC_5X4_UNORM_SRGB,
             opengl::COMPRESSED_SRGB8_ALPHA8_ASTC_5x4_KHR,
             vulkan::FORMAT_ASTC_5x4_SRGB_BLOCK,
-            5,  4, 16, FORMAT_ASTC, decode_block_astc, nullptr
+            5,  4, 16, FORMAT_ASTC_SRGB, decode_block_astc_srgb, nullptr
         ),
 
         TextureCompressionInfo(
@@ -603,7 +638,7 @@ namespace
             dxgi::FORMAT_ASTC_5X5_UNORM_SRGB,
             opengl::COMPRESSED_SRGB8_ALPHA8_ASTC_5x5_KHR,
             vulkan::FORMAT_ASTC_5x5_SRGB_BLOCK,
-            5,  5, 16, FORMAT_ASTC, decode_block_astc, nullptr
+            5,  5, 16, FORMAT_ASTC_SRGB, decode_block_astc_srgb, nullptr
         ),
 
         TextureCompressionInfo(
@@ -611,7 +646,7 @@ namespace
             dxgi::FORMAT_ASTC_6X5_UNORM_SRGB,
             opengl::COMPRESSED_SRGB8_ALPHA8_ASTC_6x5_KHR,
             vulkan::FORMAT_ASTC_6x5_SRGB_BLOCK,
-            6,  5, 16, FORMAT_ASTC, decode_block_astc, nullptr
+            6,  5, 16, FORMAT_ASTC_SRGB, decode_block_astc_srgb, nullptr
         ),
 
         TextureCompressionInfo(
@@ -619,7 +654,7 @@ namespace
             dxgi::FORMAT_ASTC_6X6_UNORM_SRGB,
             opengl::COMPRESSED_SRGB8_ALPHA8_ASTC_6x6_KHR,
             vulkan::FORMAT_ASTC_6x6_SRGB_BLOCK,
-            6,  6, 16, FORMAT_ASTC, decode_block_astc, nullptr
+            6,  6, 16, FORMAT_ASTC_SRGB, decode_block_astc_srgb, nullptr
         ),
 
         TextureCompressionInfo(
@@ -627,7 +662,7 @@ namespace
             dxgi::FORMAT_ASTC_8X5_UNORM_SRGB,
             opengl::COMPRESSED_SRGB8_ALPHA8_ASTC_8x5_KHR,
             vulkan::FORMAT_ASTC_8x5_SRGB_BLOCK,
-            8,  5, 16, FORMAT_ASTC, decode_block_astc, nullptr
+            8,  5, 16, FORMAT_ASTC_SRGB, decode_block_astc_srgb, nullptr
         ),
 
         TextureCompressionInfo(
@@ -635,7 +670,7 @@ namespace
             dxgi::FORMAT_ASTC_8X6_UNORM_SRGB,
             opengl::COMPRESSED_SRGB8_ALPHA8_ASTC_8x6_KHR,
             vulkan::FORMAT_ASTC_8x6_SRGB_BLOCK,
-            8,  6, 16, FORMAT_ASTC, decode_block_astc, nullptr
+            8,  6, 16, FORMAT_ASTC_SRGB, decode_block_astc_srgb, nullptr
         ),
 
         TextureCompressionInfo(
@@ -643,7 +678,7 @@ namespace
             dxgi::FORMAT_ASTC_8X8_UNORM_SRGB,
             opengl::COMPRESSED_SRGB8_ALPHA8_ASTC_8x8_KHR,
             vulkan::FORMAT_ASTC_8x8_SRGB_BLOCK,
-            8,  8, 16, FORMAT_ASTC, decode_block_astc, nullptr
+            8,  8, 16, FORMAT_ASTC_SRGB, decode_block_astc_srgb, nullptr
         ),
 
         TextureCompressionInfo(
@@ -651,7 +686,7 @@ namespace
             dxgi::FORMAT_ASTC_10X5_UNORM_SRGB,
             opengl::COMPRESSED_SRGB8_ALPHA8_ASTC_10x5_KHR,
             vulkan::FORMAT_ASTC_10x5_SRGB_BLOCK,
-            10,  5, 16, FORMAT_ASTC, decode_block_astc, nullptr
+            10,  5, 16, FORMAT_ASTC_SRGB, decode_block_astc_srgb, nullptr
         ),
 
         TextureCompressionInfo(
@@ -659,7 +694,7 @@ namespace
             dxgi::FORMAT_ASTC_10X6_UNORM_SRGB,
             opengl::COMPRESSED_SRGB8_ALPHA8_ASTC_10x6_KHR,
             vulkan::FORMAT_ASTC_10x6_SRGB_BLOCK,
-            10,  6, 16, FORMAT_ASTC, decode_block_astc, nullptr
+            10,  6, 16, FORMAT_ASTC_SRGB, decode_block_astc_srgb, nullptr
         ),
 
         TextureCompressionInfo(
@@ -667,7 +702,7 @@ namespace
             dxgi::FORMAT_ASTC_10X8_UNORM_SRGB,
             opengl::COMPRESSED_SRGB8_ALPHA8_ASTC_10x8_KHR,
             vulkan::FORMAT_ASTC_10x8_SRGB_BLOCK,
-            10,  8, 16, FORMAT_ASTC, decode_block_astc, nullptr
+            10,  8, 16, FORMAT_ASTC_SRGB, decode_block_astc_srgb, nullptr
         ),
 
         TextureCompressionInfo(
@@ -675,7 +710,7 @@ namespace
             dxgi::FORMAT_ASTC_10X10_UNORM_SRGB,
             opengl::COMPRESSED_SRGB8_ALPHA8_ASTC_10x10_KHR,
             vulkan::FORMAT_ASTC_10x10_SRGB_BLOCK,
-            10, 10, 16, FORMAT_ASTC, decode_block_astc, nullptr
+            10, 10, 16, FORMAT_ASTC_SRGB, decode_block_astc_srgb, nullptr
         ),
 
         TextureCompressionInfo(
@@ -683,7 +718,7 @@ namespace
             dxgi::FORMAT_ASTC_12X10_UNORM_SRGB,
             opengl::COMPRESSED_SRGB8_ALPHA8_ASTC_12x10_KHR,
             vulkan::FORMAT_ASTC_12x10_SRGB_BLOCK,
-            12, 10, 16, FORMAT_ASTC, decode_block_astc, nullptr
+            12, 10, 16, FORMAT_ASTC_SRGB, decode_block_astc_srgb, nullptr
         ),
 
         TextureCompressionInfo(
@@ -691,7 +726,7 @@ namespace
             dxgi::FORMAT_ASTC_12X12_UNORM_SRGB,
             opengl::COMPRESSED_SRGB8_ALPHA8_ASTC_12x12_KHR,
             vulkan::FORMAT_ASTC_12x12_SRGB_BLOCK,
-            12, 12, 16, FORMAT_ASTC, decode_block_astc, nullptr
+            12, 12, 16, FORMAT_ASTC_SRGB, decode_block_astc_srgb, nullptr
         ),
 
         // OES_texture_compression_astc
