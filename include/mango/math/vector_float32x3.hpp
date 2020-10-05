@@ -1,11 +1,11 @@
 /*
     MANGO Multimedia Development Platform
-    Copyright (C) 2012-2019 Twilight Finland 3D Oy Ltd. All rights reserved.
+    Copyright (C) 2012-2020 Twilight Finland 3D Oy Ltd. All rights reserved.
 */
 #pragma once
 
-#include "vector.hpp"
-#include "vector_float32x2.hpp"
+#include <mango/math/vector.hpp>
+#include <mango/math/vector_float32x2.hpp>
 
 namespace mango
 {
@@ -50,13 +50,13 @@ namespace mango
             // generate 2 component accessors
 #define VECTOR3_SHUFFLE_ACCESSOR2(A, B, NAME) \
             ShuffleAccessor2<A, B> NAME
-#include "accessor.hpp"
+#include <mango/math/accessor.hpp>
 #undef VECTOR3_SHUFFLE_ACCESSOR2
 
             // generate 3 component accessors
 #define VECTOR3_SHUFFLE_ACCESSOR3(A, B, C, NAME) \
             ShuffleAccessor3<A, B, C> NAME
-#include "accessor.hpp"
+#include <mango/math/accessor.hpp>
 #undef VECTOR3_SHUFFLE_ACCESSOR3
         };
 

@@ -4,7 +4,7 @@
 */
 #pragma once
 
-#include "simd.hpp"
+#include <mango/simd/simd.hpp>
 
 namespace mango {
 namespace simd {
@@ -1964,7 +1964,7 @@ namespace simd {
 
 #define SIMD_ZEROMASK_INT128
 #define SIMD_MASK_INT128
-#include "common_mask.hpp"
+#include <mango/simd/common_mask.hpp>
 #undef SIMD_ZEROMASK_INT128
 #undef SIMD_MASK_INT128
 

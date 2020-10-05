@@ -4,9 +4,9 @@
 */
 #pragma once
 
-#include "vector.hpp"
-#include "vector_float32x2.hpp"
-#include "vector_float32x3.hpp"
+#include <mango/math/vector.hpp>
+#include <mango/math/vector_float32x2.hpp>
+#include <mango/math/vector_float32x3.hpp>
 
 namespace mango
 {
@@ -37,19 +37,19 @@ namespace mango
             // generate 2 component accessors
 #define VECTOR4_SHUFFLE_ACCESSOR2(A, B, NAME) \
             ShuffleAccessor4x2<float, simd::f32x4, A, B> NAME
-#include "accessor.hpp"
+#include <mango/math/accessor.hpp>
 #undef VECTOR4_SHUFFLE_ACCESSOR2
 
             // generate 3 component accessors
 #define VECTOR4_SHUFFLE_ACCESSOR3(A, B, C, NAME) \
             ShuffleAccessor4x3<float, simd::f32x4, A, B, C> NAME
-#include "accessor.hpp"
+#include <mango/math/accessor.hpp>
 #undef VECTOR4_SHUFFLE_ACCESSOR3
 
             // generate 4 component accessors
 #define VECTOR4_SHUFFLE_ACCESSOR4(A, B, C, D, NAME) \
             ShuffleAccessor4<float, simd::f32x4, A, B, C, D> NAME
-#include "accessor.hpp"
+#include <mango/math/accessor.hpp>
 #undef VECTOR4_SHUFFLE_ACCESSOR4
         };
 
