@@ -18,6 +18,7 @@
  *  GNU General Public License for more details (www.gnu.org/licenses)
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+
 //
 // This file contains optimizations and other changes (C) Frank Van Hooft 2009
 //
@@ -46,6 +47,7 @@ namespace
         { JPEG_U8_RGBA, Format(32, Format::UNORM, Format::RGBA, 8, 8, 8, 8) },
     };
 
+#if defined(MANGO_ENABLE_LICENSE_GPL)
     const u16 g_luminance_dc_code_table [] =
     {
         0x0000, 0x0002, 0x0003, 0x0004, 0x0005, 0x0006,
@@ -1902,6 +1904,7 @@ namespace
 
         status.info = jp.info;
     }
+#endif
 
 } // namespace
 
@@ -1929,6 +1932,7 @@ namespace jpeg {
     ImageEncodeStatus encodeImage(Stream& stream, const Surface& surface, float quality)
     {
         ImageEncodeStatus status;
+#if defined(MANGO_ENABLE_LICENSE_GPL)
 
         // configure quality
         quality = clamp(1.0f - quality, 0.0f, 1.0f);
@@ -1948,7 +1952,10 @@ namespace jpeg {
             Bitmap temp(surface, sf.format);
             encodeJPEG(status, temp, stream, iq, sf.sample);
         }
-
+#else
+        status.success = false;
+        status.setError("disabled by license");
+#endif
         return status;
     }
 

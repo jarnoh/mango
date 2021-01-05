@@ -65,6 +65,7 @@ namespace
         return x;
     }
 
+#if defined(MANGO_ENABLE_LICENSE_GPL)
     // ------------------------------------------------------------
     // ImageEncoder
     // ------------------------------------------------------------
@@ -74,6 +75,7 @@ namespace
         ImageEncodeStatus status = jpeg::encodeImage(stream, surface, options.quality);
         return status;
     }
+#endif
 
 } // namespace
 
@@ -86,8 +88,10 @@ namespace mango
         registerImageDecoder(createInterface, ".jpeg");
         registerImageDecoder(createInterface, ".jfif");
         registerImageDecoder(createInterface, ".mpo");
+#if defined(MANGO_ENABLE_LICENSE_GPL)
         registerImageEncoder(imageEncode, ".jpg");
         registerImageEncoder(imageEncode, ".jpeg");
+#endif
     }
 
 } // namespace mango
